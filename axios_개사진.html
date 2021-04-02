@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--axios CDN-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>개사진</title>
+</head>
+
+<body>
+    <h1>바닐라 JS + axios => API에서 개사진 가져오기 </h1>
+    <button id="dog">개</button>
+    <div class="dogs"></div>
+    <script>
+
+        //https://velog.io/@unani92/Axios-라이브러리를-통한-비동기처리-방식
+
+        button = document.querySelector("#dog")
+        api주소 = 'https://dog.ceo/api/breeds/image/random'
+
+        function 개사진가져오기 () {
+            axios.get(api주소)
+            .then(   (응답) => {
+                    const 개사진주소 = 응답.data.message
+                    const 개사진태그 = document.createElement("img")
+                    
+                    개사진태그.src = 개사진주소
+                    개사진태그.style.height = "300px"
+                    document.querySelector(".dogs").appendChild(개사진태그)
+
+                    const 개링크태그 = document.createElement("a")
+                    개링크태그.href = 개사진주소
+                    개링크태그.text = "개사진링크"
+                    개링크태그.target = "_blank"
+                    document.querySelector(".dogs").appendChild(개링크태그)
+                    
+                    console.log(응답.data.status)
+                    console.log(응답.data.message)
+                    console.log(개링크태그)
+                })
+            .catch(  (error) => {
+                consol.log(error)
+            })
+        }
+        button.addEventListener("mouseover", 개사진가져오기)
+
+    //axios는 promise기반 API 라이브러리로서 axios.get('url')으로 new promise 객체를 반환한다. 
+    //그 객체에 promise.then promise.catch 이런식으로 접근하는 것 async await 뭐 이런거 콜백함수
+
+    </script>
+
+</body>
+
+</html>

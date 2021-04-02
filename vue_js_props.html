@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p-component v-bind:프랍="상위메시지1"></p-component>
+        <p-component v-bind:프랍="상위메시지2"></p-component>
+        <p-component v-bind:프랍="상위메시지3"></p-component>
+        <p-component v-bind:프랍="상위메시지4"></p-component>
+        <p-component v-on:update="showAlert"></p-component>
+    </div>
+    <button id="click" @click="clickButton">click me</button>
+
+</body>
+
+<script>
+//전역 컴포넌트 Vue.component('app-header', {template: '<h1>Header Component</h1>'}); 
+//(1)지역 컴포넌트 var appHeader = {template: '<h1>Header Component</h1>'}
+//(2)지역 컴포넌트 new Vue({  components: { 'app-header': appHeader  } })
+//Vue.component로 쓰면 전역 컴포넌트 / var 변수명 쓰고 new Vue 이렇게 쓰면 지역 컴포넌트,
+
+
+
+// 하위 컴포넌트가 먼저 정의됨 => 하위컴포넌트는 지역 컴포넌트임
+var p컴포넌트 = {
+  props: ['프랍'],
+  template: '<p>{{ 프랍 }}</p>',
+  methods : {
+    sendEvent: function() {
+      this.$emit('update');  //에밋
+  }
+}}
+
+var h컴포넌트 = {
+  props: ['프랍'],
+  template: '<h1>{{ 프랍 }}</h1>'
+}
+
+
+// 상위 컴포넌트 : root 컴포넌트
+new Vue({
+  el: '#app',
+  components: {
+    'p-component': p컴포넌트,
+    'h-component': h컴포넌트,
+  },
+  data: {
+    상위메시지1 : '이거를 어따가 쓰는건데?',
+    상위메시지2 : '상위 컴포넌트랑 하위의 템플릿을 조합해서 관리가 편해지는건가?', 
+    상위메시지3 : '여기다가 여러개 써놓고 골라쓰는건가?',
+    상위메시지4 : '에밋은 또 뭐야?',
+  },
+  methods : {
+    showAlert: function() {
+      alert('event received');
+}
+}
+}
+)
+
+//클릭하기
+new Vue({
+    el: '#click',
+  methods: {
+    clickButton() {
+      alert('clicked');
+    }
+  }
+})
+
+//전역 컴포넌트 등록
+Vue.components ('app-header', {
+    template: '<h1>Header Component</h1>'
+    },
+);
+
+</script>
+</html>

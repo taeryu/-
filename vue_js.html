@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="show=!show">hide</button>
+        <div v-if="show">
+    <h1> {{ message }} </h1>
+    <p> {{ var1 }} </p>
+    <input v-model="message" >
+    <a :href="링크" target="_blank" >vue tutorial</a>
+    <button @click="like"> {{ count }} 좋아요</button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    var vm = new Vue({
+        el : "#app",
+        data : {
+            message : "this area should be bond to the input field below",
+            var1 : "awesome vue.js",
+            링크 : "https://kr.vuejs.org/v2/guide/index.html",
+            show : true,
+            count : 0,
+        },
+        methods : function like(){
+            count = 1
+        }
+    })
+
+
+</script>
+
+
+</html>
