@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오API 검색</title>
+    <!--axios CDN-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+</head>
+
+<body>
+
+    <h1>카카오API 검색</h1>
+    <button id="button"> 카카오검색</button>
+    <div class="클래스"></div>
+    <p id="링크"></p>
+   
+</body>
+
+<script>
+
+var REST_API_KEY = '35659768318faa6d3680f65f473ac459';
+var query = "우리집고양이츄르를좋아해" //vue로 검색어 받기
+
+document.getElementById("button").addEventListener("click",카카오검색)
+
+function 카카오검색() {
+axios({
+    method: 'get',
+    url: `https://dapi.kakao.com/v2/search/web?query=${query}`,  
+    headers: {'Authorization': 'KakaoAK ' + REST_API_KEY }
+  })
+  .then(function (res) {
+   for (var i = 0; i < res.data.documents.length; i++) {
+
+    var res_contents = JSON.stringify(res.data.documents[i].contents);
+    var res_url = JSON.stringify(res.data.documents[i].url).replace('"',''); //따옴표 날림
+
+    document.getElementById("링크").innerHTML= res_contents
+
+    const 링크태그 = document.createElement("a")
+    링크태그.href = res_url
+    링크태그.text = res_contents
+    빈줄 = document.createElement("br")
+    document.querySelector(".클래스").appendChild(빈줄)
+    document.querySelector(".클래스").appendChild(링크태그)
+
+    if (res_contents=!"") {
+    console.log(res_contents);
+    console.log(링크태그);
+}
+    
+}}
+
+)
+}
+
+</script>
+</html>
